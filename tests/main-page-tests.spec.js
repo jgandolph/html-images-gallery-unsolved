@@ -42,7 +42,7 @@ test('Main Page: Page Heading exists', async ({ page }) => {
 
 test('Main Page: layout.css should be connected', async ({ page }) => {
   const cssLocator = page.locator('[rel="stylesheet"]');
-  const firstCSSLocator = await cssLocator.nth(0);
+  const firstCSSLocator = cssLocator.nth(0);
   const cssPath = (await firstCSSLocator.getAttribute('href')) || '';
   const url = `${mainPageUrl}${preparePath(cssPath)}`;
   const res = await page.request.get(url);
@@ -53,7 +53,7 @@ test('Main Page: layout.css should be connected', async ({ page }) => {
 
 test('Main Page: image-list.css should be connected', async ({ page }) => {
   const cssLocator = page.locator('[rel="stylesheet"]');
-  const firstCSSLocator = await cssLocator.nth(1);
+  const firstCSSLocator = cssLocator.nth(1);
   const cssPath = (await firstCSSLocator.getAttribute('href')) || '';
   const url = `${mainPageUrl}${preparePath(cssPath)}`;
   const res = await page.request.get(url);
@@ -175,7 +175,7 @@ test('Main Page: The nature-image.jpg image file path is used for the Nature car
 test('Main Page: Should open the nature page when clicked in the top navigation', async ({
   page,
 }) => {
-  const natureLink = await page
+  await page
     .locator('nav')
     .getByRole('link', { name: 'Nature' })
     .click();
@@ -185,7 +185,7 @@ test('Main Page: Should open the nature page when clicked in the top navigation'
 test('Main Page: Should open the space page when clicked in the top navigation', async ({
   page,
 }) => {
-  const spaceLink = await page
+  await page
     .locator('nav')
     .getByRole('link', { name: 'Space' })
     .click();
@@ -195,7 +195,7 @@ test('Main Page: Should open the space page when clicked in the top navigation',
 test('Main Page: Should open the plants page when clicked in the top navigation', async ({
   page,
 }) => {
-  const plantsLink = await page
+  await page
     .locator('nav')
     .getByRole('link', { name: 'Plants' })
     .click();
@@ -205,7 +205,7 @@ test('Main Page: Should open the plants page when clicked in the top navigation'
 test('Main Page: Plant details Should open the Modern Design page when clicked in the item card', async ({
   page,
 }) => {
-  const plantsLink = await page
+  await page
     .getByRole('link', { name: 'Plants Details' })
     .click();
   expect(page.url()).toBe(plantsPageUrl);
@@ -214,7 +214,7 @@ test('Main Page: Plant details Should open the Modern Design page when clicked i
 test('Main Page: Modern Design details link should open Modern Design page when clicked in the item card', async ({
   page,
 }) => {
-  const modernDEsignLink = await page
+  await page
     .getByRole('link', { name: 'Modern Design Details' })
     .click();
   expect(page.url()).toBe(modernDesignPageUrl);
@@ -223,7 +223,7 @@ test('Main Page: Modern Design details link should open Modern Design page when 
 test('Main Page: Space details link should open Space page when clicked in the item card', async ({
   page,
 }) => {
-  const spaceLink = await page
+  await page
     .getByRole('link', { name: 'Space Details' })
     .click();
   expect(page.url()).toBe(spacePageUrl);
@@ -232,7 +232,7 @@ test('Main Page: Space details link should open Space page when clicked in the i
 test('Main Page: Nature details link should open Nature page when clicked in the item card', async ({
   page,
 }) => {
-  const natureLink = await page
+  await page
     .getByRole('link', { name: 'Nature Details' })
     .click();
   expect(page.url()).toBe(naturePageUrl);

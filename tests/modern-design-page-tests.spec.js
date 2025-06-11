@@ -1,9 +1,7 @@
-const {
-  'liveServer.settings.port': liveServerPort,
-} = require('../.vscode/settings.json');
-
 // @ts-check
 import { test, expect } from '@playwright/test';
+import settings from '../.vscode/settings.json';
+const liveServerPort = settings['liveServer.settings.port'];
 
 // Functions and constants
 
@@ -47,7 +45,7 @@ test('Modern Design Page: Page Heading exists', async ({ page }) => {
 
 test('Modern Design Page: layout.css should be connected', async ({ page }) => {
   const cssLocator = page.locator('[rel="stylesheet"]');
-  const firstCSSLocator = await cssLocator.nth(0);
+  const firstCSSLocator = cssLocator.nth(0);
   const cssPath = (await firstCSSLocator.getAttribute('href')) || '';
   const url = `${mainPageUrl}${preparePath(cssPath)}`;
   const res = await page.request.get(url);
@@ -60,7 +58,7 @@ test('Modern Design Page: image-detail.css should be connected', async ({
   page,
 }) => {
   const cssLocator = page.locator('[rel="stylesheet"]');
-  const secondCSSLocator = await cssLocator.nth(1);
+  const secondCSSLocator = cssLocator.nth(1);
   const cssPath = (await secondCSSLocator.getAttribute('href')) || '';
   const url = `${mainPageUrl}${preparePath(cssPath)}`;
   const res = await page.request.get(url);
@@ -139,7 +137,7 @@ test('Modern Design Page: The design-image.jpg image file path is used for the m
 test('Modern Design Page: Should open the nature page when clicked in the top navigation', async ({
   page,
 }) => {
-  const natureLink = await page
+  await page
     .locator('nav')
     .getByRole('link', { name: 'Nature' })
     .click();
@@ -149,7 +147,7 @@ test('Modern Design Page: Should open the nature page when clicked in the top na
 test('Modern Design Page: Should open the space page when clicked in the top navigation', async ({
   page,
 }) => {
-  const spaceLink = await page
+  await page
     .locator('nav')
     .getByRole('link', { name: 'Space' })
     .click();
@@ -159,7 +157,7 @@ test('Modern Design Page: Should open the space page when clicked in the top nav
 test('Modern Design Page: Should open the plants page when clicked in the top navigation', async ({
   page,
 }) => {
-  const plantsLink = await page
+  await page
     .locator('nav')
     .getByRole('link', { name: 'Plants' })
     .click();
@@ -169,7 +167,7 @@ test('Modern Design Page: Should open the plants page when clicked in the top na
 test('Modern Design: Should open the modern design page when clicked in the top navigation', async ({
   page,
 }) => {
-  const modernDesignLink = await page
+  await page
     .locator('nav')
     .getByRole('link', { name: 'Modern Design' })
     .click();
@@ -181,7 +179,7 @@ test('Modern Design: Should open the modern design page when clicked in the top 
 test('Back to home page link should redirect to the main page', async ({
   page,
 }) => {
-  const backHomeLinkLocator = await page
+  await page
     .getByRole('link', { name: 'Back to Home Page' })
     .click();
   expect([mainPageUrl, mainPageUrlLong].includes(page.url())).toBeTruthy();
@@ -192,7 +190,7 @@ test('Back to home page link should redirect to the main page', async ({
 test('"Prev: Space" link should redirect to the Space page', async ({
   page,
 }) => {
-  const prevNatureLink = await page
+  await page
     .getByRole('link', { name: 'Prev: Space' })
     .click();
   expect(page.url()).toBe(spacePageUrl);
@@ -201,7 +199,7 @@ test('"Prev: Space" link should redirect to the Space page', async ({
 test('"Next: Plants" link should redirect to the Plants page', async ({
   page,
 }) => {
-  const nexModernDesignLink = await page
+  await page
     .getByRole('link', { name: 'Next: Plants' })
     .click();
   expect(page.url()).toBe(plantsPageUrl);
@@ -210,7 +208,7 @@ test('"Next: Plants" link should redirect to the Plants page', async ({
 test('"More Modern Design Images" link should use an absolute path to unsplash.com "modern design" collection page', async ({
   page,
 }) => {
-  const nexModernDesignLink = await page
+  await page
     .getByRole('link', { name: 'More Modern Design Images' })
     .click();
   expect(page.url() === moreModernDesignLink).toBeTruthy();
